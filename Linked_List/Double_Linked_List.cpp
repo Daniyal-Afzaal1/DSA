@@ -45,12 +45,13 @@ public:
     void PrintReverse()
     {
         Node *temp = tail;
-        std::cout << "NULL";
+
         while (temp != NULL)
         {
-            std::cout << " <- " << temp->data;
-            tail = tail->prev;
+            std::cout<< temp->data<< " -> " ;
+            temp = temp->prev;
         }
+        std::cout << "NULL";
     }
 
     void AddBegin(int data)
@@ -164,24 +165,100 @@ public:
         delete temp;
     }
 
-    void DeletePos(int data)  //Needed to be completed
+    void DeletePos(int data)
     {
         if (head == NULL)
-        { // when there are 0 elements
+        {
             std::cout << "There is nothing to delete\n";
             return;
         }
+
         Node *temp = head;
 
-        while (temp->data != data)
+        while (temp != NULL && temp->data != data) //temp != NULL, in case data not exists
         {
             temp = temp->next;
         }
 
-        Node *temp2 = temp->next;
+        if (temp == NULL)
+        {
+            std::cout << "Data not found\n";
+            return;
+        }
+
+        if (temp == head)
+        {
+            DeleteBegin();
+            return;
+        }
+
+        if (temp == tail)
+        {
+            DeleteEnd();
+            return;
+        }
+
         Node *temp1 = temp->prev;
+        Node *temp2 = temp->next;
+
         temp1->next = temp2;
         temp2->prev = temp1;
+
         delete temp;
     }
 };
+
+int main()
+{
+    Double_Linked_List list;
+
+    
+    std::cout << "Inserting at end:\n";
+
+    list.InsertEnd(10);
+    list.PrintForward(); std::cout << std::endl;
+
+    list.InsertEnd(20);
+    list.PrintForward(); std::cout << std::endl;
+
+    list.InsertEnd(30);
+    list.PrintForward(); std::cout << std::endl;
+
+    list.InsertEnd(40);
+    list.PrintForward(); std::cout << std::endl;
+
+    std::cout << "Forward: ";
+    list.PrintForward();
+    std::cout << std::endl;
+
+    std::cout << "Reverse: ";
+    list.PrintReverse();
+    std::cout << std::endl;
+
+    std::cout << "\nInsert 5 at beginning\n";
+    list.AddBegin(5);
+    list.PrintForward();
+    std::cout << std::endl;
+
+    std::cout << "\nInsert 25 at position 3\n";
+    list.InsertPos(25, 3);
+    list.PrintForward();
+    std::cout << std::endl;
+
+    std::cout << "\nDelete Begin\n";
+    list.DeleteBegin();
+    list.PrintForward();
+    std::cout << std::endl;
+
+    std::cout << "\nDelete End\n";
+    list.DeleteEnd();
+    list.PrintForward();
+    std::cout << std::endl;
+
+    std::cout << "\nDelete data 25\n";
+    list.DeletePos(25);
+    list.PrintForward();
+    std::cout << std::endl;
+
+    return 0;
+}
