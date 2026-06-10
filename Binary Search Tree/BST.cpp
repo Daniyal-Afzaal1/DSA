@@ -67,7 +67,7 @@ BST_NODE *Inoder_Successor(BST_NODE *root){
 }
 
 BST_NODE *Delete_Node(BST_NODE *root, int data){
-    if(root == NULL){   //when we return from case 1 or 2 after deleting it assigns the NULL to its parent
+    if(root == NULL){   
         return root;
     }
 
